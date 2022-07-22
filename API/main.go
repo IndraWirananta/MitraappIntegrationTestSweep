@@ -188,32 +188,37 @@ func extractValue(body string, key string) (string, string) {
 	var end, openCurlyBracket, closeCurlyBracket int
 	if startStaging < 0 {
 		varStaging = "{}"
-	}
-	for i := startStaging; i < len(body); i++ {
-		if string(body[i]) == "{" {
-			openCurlyBracket++
-		} else if string(body[i]) == "}" {
-			closeCurlyBracket++
-			if openCurlyBracket == closeCurlyBracket {
-				end = i
-				break
+	} else {
+		for i := startStaging; i < len(body); i++ {
+			if string(body[i]) == "{" {
+				openCurlyBracket++
+			} else if string(body[i]) == "}" {
+				closeCurlyBracket++
+				if openCurlyBracket == closeCurlyBracket {
+					end = i
+					break
+				}
 			}
 		}
+		varStaging = body[startStaging+12 : end+1]
 	}
-	varStaging = body[startStaging+12 : end+1]
 
-	for i := startProd; i < len(body); i++ {
-		if string(body[i]) == "{" {
-			openCurlyBracket++
-		} else if string(body[i]) == "}" {
-			closeCurlyBracket++
-			if openCurlyBracket == closeCurlyBracket {
-				end = i
-				break
+	if startProd < 0 {
+		varProd = "{}"
+	} else {
+		for i := startProd; i < len(body); i++ {
+			if string(body[i]) == "{" {
+				openCurlyBracket++
+			} else if string(body[i]) == "}" {
+				closeCurlyBracket++
+				if openCurlyBracket == closeCurlyBracket {
+					end = i
+					break
+				}
 			}
 		}
+		varProd = body[startProd+12 : end+1]
 	}
-	varProd = body[startProd+12 : end+1]
 
 	return varStaging, varProd
 }
