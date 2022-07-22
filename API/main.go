@@ -213,7 +213,7 @@ func extractValue(body string, key string) (string, string) {
 			}
 		}
 	}
-	varStaging = body[startProd+12 : end+1]
+	varProd = body[startProd+12 : end+1]
 
 	return varStaging, varProd
 }
